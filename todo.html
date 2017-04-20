@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>todoList</title>
+    <link rel="stylesheet" href="demo.css">
+	<script src="./vue.js"></script>
+</head>
+<body>
+	<div class="top-header">
+		<div class="main">
+			<h2>任务计划列表</h2>
+		</div>
+	</div>
+	<div class="content">
+		<div class="main">
+			<h3>添加任务：</h3>
+			<input class="task-input" type="text" placeholder="例如：吃饭睡觉打豆豆；    提示：+回车即可添加任务" @keyup.enter="addTodo" v-model="todotext">
+			<ul class="task-count">
+				<li>{{nocomplate}}个任务未完成</li>
+				<li class="action">
+					<a href="#all" :class="{activity: visible === 'all'}">所有任务</a>
+					<a href="#unfinished" :class="{activity: visible === 'unfinished'}">未完成的任务</a>
+					<a href="#finished" :class="{activity: visible === 'finished'}">完成的任务</a>
+				</li>
+			</ul>
+			<h3 class="big-title">任务列表：</h3>
+			<ul class="todolist">
+				<li class="todo" :class="{editing : item === edtortodos ,completed : item.isChecked}" v-for="item in fliterChange">
+					<div class="view">
+						<input type="checkbox" class="toggle" v-model="item.isChecked">
+						<label @dblclick="edtortodo(item)">{{ item.title }}</label>
+						<button class="destroy" @click="deletetodo( item )"></button>
+					</div>
+					<input 
+						type="text" 
+						class="edit" 
+						v-model="item.title"
+						v-focus=" item === edtortodos "
+						@blur="edtorTodoed()"
+						@keyup.enter="edtorTodoed()"
+						@keyup.esc="canceltodo(item)">
+				</li>
+			</ul>
+		</div>
+	</div>
+</body>
+<script src="./demo.js"></script>
+</html>
